@@ -230,3 +230,77 @@ test('removendo um e-sport do usuário pelo id do esporte', async ({ assert, cli
 
   assert.equal(await UserESport.getCount(), 2)
 })
+
+test('vunculando esporte a um usuário', async ({ assert, client }) => {
+  const user = await Factory.model('App/Models/User').create()
+
+  const futsal = await Factory.model('App/Models/Sport').make()
+  futsal.name = "Futsal Masculino"
+  await futsal.save()
+  const volei = await Factory.model('App/Models/Sport').make()
+  volei.name = "Vôlei Masculino"
+  await volei.save()
+  const basquete = await Factory.model('App/Models/Sport').make()
+  basquete.name = "Basquete Masculino 3x3"
+  await basquete.save()
+
+  // await user.user_sports().save(futsal)
+  await user.user_sports().save(volei)
+
+  const attr = {
+    'user_id': user.id,
+    'sport_id': futsal.id
+  }
+
+  const response = await client.post('user/vinc-sport').loginVia(user).send(attr).end()
+
+  // console.log(response)
+
+  response.assertStatus(200)
+
+  // const response2 = await client.post('user/vinc-sport').loginVia(user).send(attr).end()
+
+  // console.log(response2)
+
+  // response2.assertStatus(200)
+
+  // console.log(await UserSport.query().where('user_id', user.id).fetch())
+  assert.equal(await UserSport.getCount(), 2)
+})
+
+test('vunculando e-sport a um usuário', async ({ assert, client }) => {
+  const user = await Factory.model('App/Models/User').create()
+
+  const cs = await Factory.model('App/Models/ESport').make()
+  cs.name = 'Counter Strike'
+  await cs.save()
+  const lol = await Factory.model('App/Models/ESport').make()
+  lol.name = 'League Of Legends'
+  await lol.save()
+  const fifa = await Factory.model('App/Models/ESport').make()
+  fifa.name = 'FIFA'
+  await fifa.save()
+
+  // await user.user_e_sports().save(cs)
+  await user.user_e_sports().save(lol)
+
+  const attr = {
+    'user_id': user.id,
+    'e_sport_id': cs.id
+  }
+
+  const response = await client.post('user/vinc-e-sport').loginVia(user).send(attr).end()
+
+  // console.log(response)
+
+  response.assertStatus(200)
+
+  // const response2 = await client.post('user/vinc-sport').loginVia(user).send(attr).end()
+
+  // console.log(response2)
+
+  // response2.assertStatus(200)
+
+  // console.log(await UserSport.query().where('user_id', user.id).fetch())
+  assert.equal(await UserESport.getCount(), 2)
+})

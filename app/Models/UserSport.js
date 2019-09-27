@@ -7,6 +7,14 @@ class UserSport extends Model {
     users() {
         return this.hasMany('App/Models/User')
     }
+
+    static get createdAtColumn() {
+        return null;
+    }
+
+    static get updatedAtColumn() {
+        return null;
+    }
 }
 
 module.exports = UserSport

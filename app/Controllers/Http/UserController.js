@@ -59,6 +59,32 @@ class UserController {
         const user = await User.create(request.only(['shirt_id', 'username', 'email', 'cellphone', 'password']))
         return response.json({ user })
     }
+    // vincular usuário a um esporte (REFATORAR - TA MUITO FEIO E CONFUSO)
+    async storeSport({ auth, request, response, view }) {
+        const user = await User.find(await auth.user.id)
+
+        try{
+            const user_sport = await UserSport.findByOrFail(request.only(['user_id', 'sport_id']))
+
+            return response.status(204).send("Não é possível vincular o mesmo esporte. Já existe vínculo com o mesmo.")
+        }catch(error){
+            const user_sport = await UserSport.create(request.only(['user_id', 'sport_id']))
+            return response.json({ user_sport })
+        }
+    }
+    // vincular usuário a um e-sport (REFATORAR - TA MUITO FEIO E CONFUSO)
+    async storeESport({ auth, request, response, view }) {
+        const user = await User.find(await auth.user.id)
+
+        try{
+            const user_e_sport = await UserESport.findByOrFail(request.only(['user_id', 'e_sport_id']))
+
+            return response.status(204).send("Não é possível vincular o mesmo e-sport. Já existe vínculo com o mesmo.")
+        }catch(error){
+            const user_e_sport = await UserESport.create(request.only(['user_id', 'e_sport_id']))
+            return response.json({ user_e_sport })
+        }
+    }
     // atualizar usuário por id
     async update({ auth, params, request, response, view }) {
         if (await auth.user.id == params.id) {

@@ -27,6 +27,8 @@ Route.group(() => {
     Route.get('profile/:id', 'UserController.getById')
     Route.get('sports', 'UserController.getAllSports')
     Route.get('e-sports', 'UserController.getAllESports')
+    Route.post('vinc-sport', 'UserController.storeSport')
+    Route.post('vinc-e-sport', 'UserController.storeESport')
     Route.delete('sports/:id', 'UserController.destroySport')
     Route.delete('e-sports/:id', 'UserController.destroyESport')
     // logout
