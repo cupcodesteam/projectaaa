@@ -35,13 +35,13 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
 
-  sports() {
+  user_sports() {
     return this
       .belongsToMany('App/Models/Sport')
       .pivotTable('user_sports')
   }
 
-  e_sports() {
+  user_e_sports() {
     return this
       .belongsToMany('App/Models/ESport')
       .pivotTable('user_e_sports')
