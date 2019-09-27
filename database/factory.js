@@ -15,12 +15,12 @@
 const Factory = use('Factory')
 
 Factory.blueprint('App/Models/User', (faker) => {
-  return {
-    username: faker.username(),
-    email: faker.email(),
-    cellphone: '86999999999',
-    password: faker.password(),
-  }
+    return {
+        username: faker.username(),
+        email: faker.email(),
+        cellphone: '86999999999',
+        password: faker.password(),
+    }
 })
 
 Factory.blueprint('App/Models/Shirt', (faker) => {
@@ -38,5 +38,14 @@ Factory.blueprint('App/Models/Sport', (faker) => {
 Factory.blueprint('App/Models/ESport', (faker) => {
     return {
         name: 'e-esport'
+    }
+})
+
+Factory.blueprint('App/Models/Aaa', (faker) => {
+    return {
+        name: 'aaa test',
+        institution: faker.username(),
+        email: faker.email(),
+        password: faker.password(),
     }
 })

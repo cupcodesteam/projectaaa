@@ -46,6 +46,12 @@ class User extends Model {
       .belongsToMany('App/Models/ESport')
       .pivotTable('user_e_sports')
   }
+
+  user_Aaa() {
+    return this
+      .belongsToMany('App/Models/Aaa')
+      .pivotTable('user_aaas')
+  }
 }
 
 module.exports = User

@@ -1,10 +1,12 @@
 'use strict'
 
 const User = use('App/Models/User')
+const AAA = use('App/Models/Aaa')
 const Sport = use('App/Models/Sport')
 const ESport = use('App/Models/ESport')
 const UserSport = use('App/Models/UserSport')
 const UserESport = use('App/Models/UserESport')
+const UserAaa = use('App/Models/UserAaa')
 const Factory = use('Factory')
 
 const { test, trait } = use('Test/Suite')('User')
@@ -303,4 +305,31 @@ test('vunculando e-sport a um usuário', async ({ assert, client }) => {
 
   // console.log(await UserSport.query().where('user_id', user.id).fetch())
   assert.equal(await UserESport.getCount(), 2)
+})
+
+test('vunculando e-sport a um usuário', async ({ assert, client }) => {
+  const user = await Factory.model('App/Models/User').create()
+
+  const aaa = await Factory.model('App/Models/Aaa').create()
+
+  // console.log(aaa)
+  const attr = {
+    'user_id': user.id,
+    'aaa_id': aaa.id
+  }
+
+  const response = await client.post('user/vinc-aaa').loginVia(user).send(attr).end()
+
+  // console.log(response)
+
+  response.assertStatus(200)
+
+  // const response2 = await client.post('user/vinc-sport').loginVia(user).send(attr).end()
+
+  // console.log(response2)
+
+  // response2.assertStatus(200)
+
+  // console.log(await UserSport.query().where('user_id', user.id).fetch())
+  assert.equal(await UserAaa.getCount(), 1)
 })

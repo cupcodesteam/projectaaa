@@ -1,8 +1,10 @@
 'use strict'
 
 const User = use('App/Models/User')
+const AAA = use('App/Models/Aaa')
 const UserSport = use('App/Models/UserSport')
 const UserESport = use('App/Models/UserESport')
+const UserAaa = use('App/Models/UserAaa')
 
 class UserController {
     // login
@@ -83,6 +85,19 @@ class UserController {
         }catch(error){
             const user_e_sport = await UserESport.create(request.only(['user_id', 'e_sport_id']))
             return response.json({ user_e_sport })
+        }
+    }
+    // vincular usuário a uma atlética (REFATORAR - TA MUITO FEIO E CONFUSO)
+    async storeAAA({ auth, request, response, view }) {
+        const user = await User.find(await auth.user.id)
+
+        try{
+            const user_aaa = await UserAaa.findByOrFail(request.only(['user_id', 'aaa_id']))
+
+            return response.status(204).send("Não é possível vincular-se a uma atlética já vinculada.")
+        }catch(error){
+            const user_aaa = await UserAaa.create(request.only(['user_id', 'aaa_id']))
+            return response.json({ user_aaa })
         }
     }
     // atualizar usuário por id
